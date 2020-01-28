@@ -10,11 +10,11 @@ all:
 	@echo "done"
 
 install-scripts: $(CRONS_SCRIPTS)
-	install -d $(DESTDIR)/$(SCRIPTDIR)
-	install $^ $(DESTDIR)/$(SCRIPTDIR)
+	install -d -m0755 $(DESTDIR)/$(SCRIPTDIR)
+	install $^ -m0755 $(DESTDIR)/$(SCRIPTDIR)
 
 install-conf: $(CRONS_CONFIGS)
-	install -d $(DESTDIR)/$(CONFDIR)
-	install $^ $(DESTDIR)/$(CONFDIR)
+	install -d -m0750 $(DESTDIR)/$(CONFDIR)
+	install $^ -m0640 $(DESTDIR)/$(CONFDIR)
 
 install: install-scripts install-conf
