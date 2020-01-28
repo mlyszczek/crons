@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /etc/crons-conf.d/rootfs-backup.conf
+. /etc/crons.conf.d/rootfs-backup.conf
 
 export LANG=en_US
 export XZ=${XZ_COMP}

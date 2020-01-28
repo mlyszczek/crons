@@ -1,7 +1,7 @@
 #!/bin/bash
 # smart disk monitor for critial parameters
 
-. /etc/crons-conf.d/smart-monitor.conf
+. /etc/crons.conf.d/smart-monitor.conf
 
 long=
 tmp=`mktemp`
