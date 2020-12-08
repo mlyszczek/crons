@@ -17,13 +17,19 @@ IFS=$'\n'; for l in ${EXCLUDE_DIRS}; do
 	echo "${l}" >> "${exclude_file}"
 done
 
+if mkdir ${DESTDIR}/rootfs >/dev/null; then
+	chown ${USER} ${DESTDIR}/rootfs
+	chmod ${MOD} ${DESTDIR}/rootfs
+	chmod u+w,+x ${DESTDIR}/rootfs
+fi
+
 # create backup
 tar --exclude-from=${exclude_file} --one-file-system -cJpf \
-		"${DESTDIR}/${now}.tar.xz" -C / . > "${tmp_file}" 2>&1
+		"${DESTDIR}/rootfs/${now}.tar.xz" -C / . > "${tmp_file}" 2>&1
 
 # ignore some warnings
 cat "${tmp_file}" | grep -v "socket ignored\|file changed as we read it"
 
 # fix permissions
-chown ${USER} "${DESTDIR}/${now}.tar.xz"
-chmod ${MOD} "${DESTDIR}/${now}.tar.xz"
+chown ${USER} "${DESTDIR}/rootfs/${now}.tar.xz"
+chmod ${MOD} "${DESTDIR}/rootfs/${now}.tar.xz"
