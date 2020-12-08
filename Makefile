@@ -2,7 +2,7 @@ PREFIX ?= /usr/local
 SCRIPTDIR = $(PREFIX)/etc/crons
 CONFDIR = /etc/crons.conf.d
 
-CRONS = portage-backup rootfs-backup smart-monitor
+CRONS = portage-backup rootfs-backup smart-monitor disk-usage-monitor
 CRONS_SCRIPTS = $(addsuffix .sh, $(CRONS))
 CRONS_CONFIGS = $(shell find etc/)
 
