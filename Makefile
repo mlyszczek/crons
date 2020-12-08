@@ -4,7 +4,7 @@ CONFDIR = /etc/crons.conf.d
 
 CRONS = portage-backup rootfs-backup smart-monitor disk-usage-monitor
 CRONS_SCRIPTS = $(addsuffix .sh, $(CRONS))
-CRONS_CONFIGS = $(shell find etc/)
+CRONS_CONFIGS = $(shell find etc/ -mindepth 1)
 
 all:
 	@echo "done"
