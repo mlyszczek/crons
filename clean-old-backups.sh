@@ -1,12 +1,9 @@
 #!/bin/bash
 
-#. /etc/crons.conf.d/backup.conf
-#. /etc/crons.conf.d/clean-old-backups.conf
+. /etc/crons.conf.d/backup.conf
+. /etc/crons.conf.d/clean-old-backups.conf
 
-. etc/backup.conf
-. etc/clean-old-backups.conf
 
-MOD=400
 export LANG=en_US
 
 ## ==========================================================================
