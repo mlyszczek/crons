@@ -5,6 +5,7 @@
 
 long=
 tmp=`mktemp`
+trap "rm -f ${tmp}" EXIT
 
 # for now, store output into variable since we don't know yet if we are going
 # to send it or not (depending on errors)
@@ -95,4 +96,3 @@ if [ ${etotal} -gt 0 ] || [ smart_monitor_send_always -eq 1 ]; then
 	# send and email
 	cat "${tmp}"
 fi
-unlink "${tmp}"

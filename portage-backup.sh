@@ -7,6 +7,7 @@ export XZ=${XZ_COMP}
 umask 077
 now=`date +%Y-%m-%d`
 tmp_file=$(mktemp)
+trap "rm -f ${tmp_file}" EXIT
 
 # create backup
 tar -cJpf "${DESTDIR}/etc.${now}.tar.xz" -C /etc portage
@@ -18,6 +19,3 @@ chown ${USER} "${DESTDIR}/etc.${now}.tar.xz" "${DESTDIR}/world.${now}.gz" \
 		"${DESTDIR}/world_sets.${now}.gz"
 chmod ${MOD} "${DESTDIR}/etc.${now}.tar.xz" "${DESTDIR}/world.${now}.gz" \
 		"${DESTDIR}/world_sets.${now}.gz"
-
-# and cleanup
-rm -f ${tmp_file}

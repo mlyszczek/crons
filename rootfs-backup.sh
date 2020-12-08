@@ -9,6 +9,7 @@ umask 077
 now=`date +%Y-%m-%d`
 exclude_file=$(mktemp)
 tmp_file=$(mktemp)
+trap "rm -f ${exclude_file} ${tmp_file}" EXIT
 
 # create list of exludes
 rm -f "${exclude_file}"
@@ -26,7 +27,3 @@ cat "${tmp_file}" | grep -v "socket ignored\|file changed as we read it"
 # fix permissions
 chown ${USER} "${DESTDIR}/${now}.tar.xz"
 chmod ${MOD} "${DESTDIR}/${now}.tar.xz"
-
-# and cleanup
-rm -f ${exclude_file}
-rm -f ${tmp_file}
