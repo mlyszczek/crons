@@ -1,5 +1,6 @@
 #!/bin/bash
 
+. /etc/crons.conf.d/backup.conf
 . /etc/crons.conf.d/rootfs-backup.conf
 
 export LANG=en_US

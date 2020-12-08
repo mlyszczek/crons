@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /etc/crons.conf.d/portage-backup.conf
+. /etc/crons.conf.d/backup.conf
 
 export LANG=en_US
 export XZ=${XZ_COMP}
