@@ -9,13 +9,13 @@ tmp_file=$(mktemp)
 trap "rm -f ${tmp_file}" EXIT
 DESTDIR="${DESTDIR}/portage"
 
-if mkdir ${DESTDIR} >/dev/null; then
+if mkdir ${DESTDIR} 2>/dev/null; then
 	chown ${USER} ${DESTDIR}
 	chmod ${MOD} ${DESTDIR}
 	chmod u+w,+x ${DESTDIR}
 fi
 
-if mkdir ${DESTDIR}/{etc,world,sets} >/dev/null; then
+if mkdir ${DESTDIR}/{etc,world,sets} 2>/dev/null; then
 	chown ${USER} ${DESTDIR}/{etc,world,sets}
 	chmod ${MOD} ${DESTDIR}/{etc,world,sets}
 	chmod u+w,+x ${DESTDIR}/{etc,world,sets}

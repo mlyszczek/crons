@@ -17,7 +17,7 @@ IFS=$'\n'; for l in ${EXCLUDE_DIRS}; do
 	echo "${l}" >> "${exclude_file}"
 done
 
-if mkdir ${DESTDIR}/rootfs >/dev/null; then
+if mkdir ${DESTDIR}/rootfs 2>/dev/null; then
 	chown ${USER} ${DESTDIR}/rootfs
 	chmod ${MOD} ${DESTDIR}/rootfs
 	chmod u+w,+x ${DESTDIR}/rootfs
