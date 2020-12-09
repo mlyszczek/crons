@@ -13,6 +13,8 @@ trap "rm -f ${exclude_file} ${tmp_file}" EXIT
 
 # create list of exludes
 rm -f "${exclude_file}"
+# exclude backup dir, but remove leading '/'
+echo "${DESTDIR}" | sed 's@/@@' >> "${exclude_file}"
 IFS=$'\n'; for l in ${EXCLUDE_DIRS}; do
 	echo "${l}" >> "${exclude_file}"
 done
