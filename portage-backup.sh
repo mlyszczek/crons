@@ -2,6 +2,11 @@
 
 . /etc/crons.conf.d/backup.conf
 
+tar=tar
+if type gtar >/dev/null; then
+	tar=gtar
+fi
+
 export LANG=en_US
 export XZ=${XZ_COMP}
 now=`date +%Y-%m-%d`
@@ -22,7 +27,7 @@ if mkdir ${DESTDIR}/{etc,world,sets} 2>/dev/null; then
 fi
 
 # create backup
-tar -cJpf "${DESTDIR}/etc/${now}.tar.xz" -C /etc portage
+$tar -cJpf "${DESTDIR}/etc/${now}.tar.xz" -C /etc portage
 cat /var/lib/portage/world | gzip > "${DESTDIR}/world/${now}.gz"
 cat /var/lib/portage/world_sets | gzip > "${DESTDIR}/sets/${now}.gz"
 

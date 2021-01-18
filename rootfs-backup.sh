@@ -3,6 +3,11 @@
 . /etc/crons.conf.d/backup.conf
 . /etc/crons.conf.d/rootfs-backup.conf
 
+tar=tar
+if type gtar >/dev/null; then
+	tar=gtar
+fi
+
 export LANG=en_US
 export XZ=${XZ_COMP}
 umask 077
@@ -26,7 +31,7 @@ if mkdir ${DESTDIR}/rootfs 2>/dev/null; then
 fi
 
 # create backup
-tar --exclude-from=${exclude_file} --one-file-system -cJpf \
+$tar --exclude-from=${exclude_file} --one-file-system -cJpf \
 		"${DESTDIR}/rootfs/${now}.tar.xz" -C / . > "${tmp_file}" 2>&1
 
 # ignore some warnings
