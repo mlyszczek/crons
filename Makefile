@@ -3,7 +3,7 @@ SCRIPTDIR = $(PREFIX)/etc/crons
 CONFDIR = /etc/crons.conf.d
 
 CRONS = portage-backup rootfs-backup smart-monitor disk-usage-monitor \
-		clean-old-backups
+		clean-old-backups custom-backup
 CRONS_SCRIPTS = $(addsuffix .sh, $(CRONS))
 CRONS_CONFIGS = $(shell find etc/ -mindepth 1)
 
