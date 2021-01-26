@@ -27,7 +27,7 @@ for d in $CUSTOM_DIRS; do
 		chmod u+w,+x $DESTDIR/$d
 	fi
 
-	$tar -cJpf "$DESTDIR/$d/$now.tar.xz" -C / $d
+	$tar --one-file-system -cJpf "$DESTDIR/$d/$now.tar.xz" -C / $d
 	chown $USER $DESTDIR/$d/$now.tar.xz
 	chmod $MOD  $DESTDIR/$d/$now.tar.xz
 done
