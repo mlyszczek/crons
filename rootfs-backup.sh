@@ -31,8 +31,15 @@ if mkdir ${DESTDIR}/rootfs 2>/dev/null; then
 fi
 
 # create backup
-$tar --exclude-from=${exclude_file} --one-file-system -cJpf \
-		"${DESTDIR}/rootfs/${now}.tar.xz" -C / . > "${tmp_file}" 2>&1
+if [ -z "$CPU_LIMIT" ]; then
+	$tar --exclude-from=${exclude_file} --one-file-system -cJpf \
+			"${DESTDIR}/rootfs/${now}.tar.xz" -C / . > "${tmp_file}" 2>&1
+else
+	$tar --exclude-from=${exclude_file} --one-file-system -cpf - -C / . |
+					cpulimit -f -l$CPU_LIMIT -- xz -z - \
+					> "${DESTDIR}/rootfs/${now}.tar.xz" \
+					2> "${tmp_file}"
+fi
 
 # ignore some warnings
 cat "${tmp_file}" | grep -v "socket ignored\|file changed as we read it"
