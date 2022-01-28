@@ -37,7 +37,7 @@ do
 	dl=40 # drive length for printf
 	vl=3  # value length for printf
 	smart=`/usr/sbin/smartctl -a $d`
-	disk_name=`echo $d | cut -d'/' -f5`
+	disk_name=`echo $d | rev | cut -f1 -d/ | rev`
 
 	# add detailed smart info for later print
 	long+=$'===========================================================\n'
