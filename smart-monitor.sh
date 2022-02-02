@@ -48,7 +48,7 @@ do
 
 	# collect short health status
 
-	health=`echo "$smart" | grep "SMART overall" | cut -d':' -f2`
+	health=`echo "$smart" | grep "SMART overall" | cut -d':' -f2 | xargs echo`
 
 	rrer=`echo "$smart" | grep "Raw_Read_Error_Rate" | awk '{print $10}'`
 	ucec=`echo "$smart" | grep "UDMA_CRC_Error_Count" | awk '{print $10}'`
@@ -91,7 +91,7 @@ echo "$long"
 
 # restore stdout
 exec 1>&6 6>&-
-if [ ${etotal} -gt 0 ] || [ smart_monitor_send_always -eq 1 ]; then
+if [ ${etotal} -gt 0 ] || [ $smart_monitor_send_always -eq 1 ]; then
 	# if there was at least one error or user wants report always,
 	# send and email
 	cat "${tmp}"
