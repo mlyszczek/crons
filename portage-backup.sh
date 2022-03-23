@@ -3,7 +3,7 @@
 . /etc/crons.conf.d/backup.conf
 
 tar=tar
-if type gtar >/dev/null; then
+if type gtar 2>/dev/null >/dev/null; then
 	tar=gtar
 fi
 
