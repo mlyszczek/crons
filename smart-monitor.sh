@@ -7,6 +7,13 @@ long=
 tmp=`mktemp`
 trap "rm -f ${tmp}" EXIT
 
+if [ x$1 = x--print ]; then
+	smart_monitor_send_always=1
+fi
+
+cache_dir='/var/cache/smart-monitor'
+[ -d $cache_dir ] || mkdir -p $cache_dir
+
 # for now, store output into variable since we don't know yet if we are going
 # to send it or not (depending on errors)
 exec 6>&1
@@ -38,6 +45,8 @@ do
 	vl=3  # value length for printf
 	smart=`/usr/sbin/smartctl -a $d`
 	disk_name=`echo $d | rev | cut -f1 -d/ | rev`
+	total_cached=$(cat $cache_dir/$disk_name 2>/dev/null)
+	if [ -z "$total_cached" ]; then total_cached=0; fi
 
 	# add detailed smart info for later print
 	long+=$'===========================================================\n'
@@ -59,9 +68,24 @@ do
 	cps=`echo "$smart" | grep "Current_Pending_Sector" | awk '{print $10}'`
 	ou=`echo "$smart" | grep "Offline_Uncorrectable" | awk '{print $10}'`
 
-	etotal=$((etotal + rrer + ucec + rsc + ser + src + rec + cps + ou))
+	disk_warns=$((rrer + ucec + rsc + ser + src + rec + cps + ou))
 	if [ "${health}" != "PASSED" ]; then
-		etotal=$((etotal + 1))
+		disk_warns=$((disk_warns + 1))
+	fi
+
+	if [ $disk_warns -ne $total_cached ]; then
+		# make sure we only send report once disk value has increased. This
+		# is usefull when user wants to ignore warning, he may decide that
+		# UDMA_CRC_Error_Count is of no interest for him, or single
+		# Reallocated_Sector_Ct does not botter him. Without it we would
+		# send email each time this script is run. Now we only send report
+		# when value incraeses.
+		etotal=$((etotal + disk_warns))
+		echo $disk_warns > $cache_dir/$disk_name
+	# else
+	#   do not increase etotal if we already reported problem once, in this
+	#   case etotal will be 0 (if no other errors are detected) and report
+	#   won't be send
 	fi
 
 	# print table line
